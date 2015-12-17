@@ -98,6 +98,7 @@ SRC = ft_memset.c \
 	  list_new.c \
 	  list_push_front.c \
 	  list_push_back.c \
+	  list_apply.c \
 	  \
 	  get_next_line.c
 
