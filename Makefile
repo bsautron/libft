@@ -11,9 +11,17 @@
 # **************************************************************************** #
 
 CC = gcc
-CFLAGS = -Wall -Wextra -Werror
+NAME = libft
+LIB_NAME = $(NAME).a
+CFLAGS = -Wextra -Wall -Werror
 
-SRC = ft_memset.c \
+SOURCES_FOLDER = .
+TEST_FORDER = test
+INCLUDES_FOLDER = includes
+OBJECTS_FOLDER = ../.objects/$(NAME)
+
+INCLUDES = $(NAME).h
+SOURCES = ft_memset.c \
 	  ft_bzero.c \
 	  ft_memcpy.c \
 	  ft_memccpy.c \
@@ -80,10 +88,15 @@ SRC = ft_memset.c \
 	  ft_strtrim_letter.c \
 	  \
 	  ft_isalpha.c \
+	  ft_isloweralpha.c \
+	  ft_isupperalpha.c \
 	  ft_isdigit.c \
 	  ft_isprint.c \
 	  ft_isalnum.c \
 	  ft_isascii.c \
+	  ft_isnan.c \
+	  ft_isword.c \
+	  ft_iswordalnum.c \
 	  ft_toupper.c \
 	  ft_tolower.c \
 	  \
@@ -95,44 +108,45 @@ SRC = ft_memset.c \
 	  ft_lstiter.c \
 	  ft_lstmap.c \
 	  \
-	  list_new.c \
-	  list_push_front.c \
-	  list_push_back.c \
-	  list_apply.c \
-	  \
-	  get_next_line.c
+	  get_next_line.c \
 
-OBJ = $(SRC:%.c=.obj/%.o)
-OBJ_DIR = .obj/
 
-INCLUDE_DIR = includes/
-INCLUDE_FILES = libft.h \
-				plist.h \
-				get_next_line.h
+OBJECTS = $(SOURCES:%.c=%.o)
 
-NAME = libft.a
+all: init $(LIB_NAME)
 
-all: dor $(NAME)
+# dev: init $(MAIN_OBJECT) $(NAME)
 
-$(NAME): $(OBJ)
-	@ar rc $(NAME) $(OBJ)
-	@ranlib $(NAME)
-	@echo "\033[0m"
+ifdef DEPENDENCIES
+init: $(addprefix ../$(DEPENDENCIES)/, $(addprefix $(DEPENDENCIES), .a))
+	$(MAKE_LIBRARIES)
+	@mkdir -p $(OBJECTS_FOLDER)/$(SOURCES_FOLDER)
 
-dor:
-	@mkdir -p $(OBJ_DIR)
+$(addprefix $(OBJECTS_FOLDER)/$(SOURCES_FOLDER)/, %.o): $(SOURCES_FOLDER)/%.c $(addprefix $(INCLUDES_FOLDER)/, $(INCLUDES))
+	$(CC) $(CFLAGS) -I $(INCLUDES_FOLDER) $(INCLUDES_LIBRARIES) -o $@ -c $<
+endif
 
-.obj/%.o: %.c $(addprefix $(INCLUDE_DIR), $(INCLUDE_FILES))
-	@echo "\033[36m   $<"
-	@$(CC) -o $@ $(FLAGS) -I includes/ -c $<
+ifndef DEPENDENCIES
+init:
+	@mkdir -p $(OBJECTS_FOLDER)/$(SOURCES_FOLDER)
+
+$(addprefix $(OBJECTS_FOLDER)/$(SOURCES_FOLDER)/, %.o): $(SOURCES_FOLDER)/%.c $(addprefix $(INCLUDES_FOLDER)/, $(INCLUDES))
+	$(CC) $(CFLAGS) -I $(INCLUDES_FOLDER) -o $@ -c $<
+endif
+
+$(MAIN_OBJECT): $(MAIN)
+	$(CC) $(CFLAGS) -I $(INCLUDES_FOLDER) -o $(MAIN_OBJECT) -c $(MAIN)
+
+$(LIB_NAME): $(addprefix $(OBJECTS_FOLDER)/$(SOURCES_FOLDER)/, $(OBJECTS))
+	ar rc $(LIB_NAME) $(addprefix $(OBJECTS_FOLDER)/$(SOURCES_FOLDER)/, $(OBJECTS))
+	ranlib $(LIB_NAME)
 
 clean:
-	rm -f $(OBJ)
-	@rmdir .obj/ 2> /dev/null || env -i
-	@echo "\033[33;31m===> Suppresion des objets"
+	rm -f $(addprefix $(OBJECTS_FOLDER)/$(SOURCES_FOLDER)/, $(OBJECTS))
+	rm -f $(MAIN_OBJECT)
+	rm -rf $(OBJECTS_FOLDER)
 
 fclean: clean
-	rm -f libft.a
-	@echo "\033[35;31m===> Suppression de la libft"
+	rm -f $(NAME)
 
 re: fclean all

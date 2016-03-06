@@ -16,7 +16,6 @@
 # include <string.h>
 # include <unistd.h>
 # include <stdlib.h>
-# include <plist.h>
 
 typedef struct	s_list
 {
@@ -89,12 +88,17 @@ int				ft_charcheck_in_str(char let, char *str);
 char			*ft_strtrim_letter(char *str);
 char			*ft_strtrim(char const *s);
 int				ft_isalpha(int c);
+int				ft_isloweralpha(int c);
+int				ft_isupperalpha(int c);
 int				ft_isdigit(int c);
 int				ft_isalnum(int c);
 int				ft_isprint(int c);
 int				ft_isascii(int c);
 int				ft_toupper(int c);
 int				ft_tolower(int c);
+int				ft_isnan(char *str);
+int				ft_isword(char *str);
+int				ft_iswordalnum(char *str);
 t_list			*ft_lstnew(void const *content, size_t content_size);
 void			ft_lstdelone(t_list **alst, void (*del)(void *, size_t));
 void			ft_lstdel(t_list **alst, void (*del)(void *, size_t));
