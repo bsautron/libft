@@ -17,11 +17,15 @@ void	ft_putstr_tab(char **tab)
 	int		i;
 
 	i = 0;
+	ft_putstr("[");
 	while (tab[i])
 	{
+		ft_putstr("\"");
 		ft_putstr(tab[i]);
+		ft_putstr("\"");
 		i++;
 		if (tab[i])
-			ft_putchar('\n');
+			ft_putstr(", ");
 	}
+	ft_putstr("]\n");
 }

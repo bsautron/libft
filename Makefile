@@ -10,17 +10,7 @@
 #                                                                              #
 # **************************************************************************** #
 
-CC = gcc
 NAME = libft
-LIB_NAME = $(NAME).a
-CFLAGS = -Wextra -Wall -Werror
-
-SOURCES_FOLDER = .
-TEST_FORDER = test
-INCLUDES_FOLDER = includes
-OBJECTS_FOLDER = ../.objects/$(NAME)
-
-INCLUDES = $(NAME).h
 SOURCES = ft_memset.c \
 	  ft_bzero.c \
 	  ft_memcpy.c \
@@ -110,15 +100,29 @@ SOURCES = ft_memset.c \
 	  \
 	  get_next_line.c \
 
+SOURCES_FOLDER = .
+
+CC = gcc
+LIB_NAME = $(NAME).a
+CFLAGS = -Wextra -Wall -Werror
+TEST_FORDER = test
+INCLUDES_FOLDER = includes
+OBJECTS_FOLDER = ../.objects/$(NAME)
+INCLUDES = $(NAME).h
+
+SOURCES_DEPENDENCIES = $(foreach dep,$(DEPENDENCIES), ../$(dep)/$(dep).a)
+LIBRARIES = $(foreach dep, $(DEPENDENCIES), -L../$(dep)/ -$(subst lib,l,$(dep)))
+INCLUDES_LIBRARIES = $(foreach dep,$(DEPENDENCIES),-I ../$(dep)/includes)
+HEADERS_LIBRARIES = $(foreach dep,$(DEPENDENCIES),../$(dep)/includes/$(dep).h)
+MAKE_LIBRARIES = $(foreach dep,$(DEPENDENCIES),make -C ../$(dep);)
+REBUILD_LIBRARIES = $(foreach dep,$(DEPENDENCIES),make re -C ../$(dep);)
 
 OBJECTS = $(SOURCES:%.c=%.o)
 
 all: init $(LIB_NAME)
 
-# dev: init $(MAIN_OBJECT) $(NAME)
-
 ifdef DEPENDENCIES
-init: $(addprefix ../$(DEPENDENCIES)/, $(addprefix $(DEPENDENCIES), .a))
+init: $(SOURCES_DEPENDENCIES)
 	$(MAKE_LIBRARIES)
 	@mkdir -p $(OBJECTS_FOLDER)/$(SOURCES_FOLDER)
 
