@@ -6,14 +6,13 @@
 /*   By: bsautron <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/11/05 17:57:51 by bsautron          #+#    #+#             */
-/*   Updated: 2014/11/07 21:27:06 by bsautron         ###   ########.fr       */
+/*   Updated: 2016/03/17 15:35:33 by bsautron         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
 char	*ft_strmapi(char const *s, char (*f)(unsigned int, char))
-
 {
 	char	*new_s;
 	int		i;
