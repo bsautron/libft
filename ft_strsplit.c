@@ -75,7 +75,7 @@ char			**ft_strsplit(char const *s, char c)
 			s += len_split(s, c);
 			i++;
 		}
+		tab[i] = NULL;
 	}
-	tab[i] = NULL;
 	return (tab);
 }
