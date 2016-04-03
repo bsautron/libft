@@ -6,7 +6,7 @@
 #    By: bsautron <bsautron@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2015/02/25 00:45:50 by bsautron          #+#    #+#              #
-#    Updated: 2015/12/12 17:29:05 by bsautron         ###   ########.fr        #
+#    Updated: 2016/04/03 19:26:21 by bsautron         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -151,6 +151,6 @@ clean:
 	rm -rf $(OBJECTS_FOLDER)
 
 fclean: clean
-	rm -f $(NAME)
+	rm -f $(NAME).a
 
 re: fclean all
