@@ -85,7 +85,6 @@ void			ft_swap(char *a, char *b);
 char			*ft_reverse(char *str);
 void			ft_sort_wordtab(char **tab);
 void			ft_strsort(char *str);
-int				ft_strcheck_char(char *str, char *letter);
 void			ft_sort_params(char **argv, int argc);
 void			ft_sort_params_rev(char **argv, int argc);
 char			*ft_strtrim(char const *s);

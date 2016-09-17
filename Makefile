@@ -75,7 +75,6 @@ SOURCES = ft_memset.c \
 	  ft_sort_wordtab.c \
 	  ft_intlen.c \
 	  ft_strsort.c \
-	  ft_strcheck_char.c \
 	  ft_sort_params.c \
 	  ft_sort_params_rev.c \
 	  \
