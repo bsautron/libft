@@ -20,7 +20,7 @@ SOURCES = ft_memset.c \
 	  ft_memcmp.c \
 	  ft_memalloc.c \
 	  ft_memdel.c \
-	  ft_free_tab.c \
+	  ft_memuniq.c \
 	  \
 	  ft_putchar.c \
 	  ft_putstr.c \
@@ -35,6 +35,9 @@ SOURCES = ft_memset.c \
 	  \
 	  ft_strlen.c \
 	  ft_strlen_esp.c \
+	  ft_strpbrk.c \
+	  ft_strspn.c \
+	  ft_strcspn.c \
 	  ft_strcpy.c \
 	  ft_strncpy.c \
 	  ft_strcmp.c \
@@ -75,8 +78,6 @@ SOURCES = ft_memset.c \
 	  ft_strcheck_char.c \
 	  ft_sort_params.c \
 	  ft_sort_params_rev.c \
-	  ft_charcheck_in_str.c \
-	  ft_strtrim_letter.c \
 	  \
 	  ft_isalpha.c \
 	  ft_isloweralpha.c \
@@ -111,6 +112,9 @@ INCLUDES_FOLDER = includes
 OBJECTS_FOLDER = ../.objects/$(NAME)
 INCLUDES = $(NAME).h
 
+MAIN = main.c
+MAIN_OBJECT = $(MAIN:%.c=%.o)
+
 SOURCES_DEPENDENCIES = $(foreach dep,$(DEPENDENCIES), ../$(dep)/$(dep).a)
 LIBRARIES = $(foreach dep, $(DEPENDENCIES), -L../$(dep)/ -$(subst lib,l,$(dep)))
 INCLUDES_LIBRARIES = $(foreach dep,$(DEPENDENCIES),-I ../$(dep)/includes)
@@ -121,6 +125,9 @@ REBUILD_LIBRARIES = $(foreach dep,$(DEPENDENCIES),make re -C ../$(dep);)
 OBJECTS = $(SOURCES:%.c=%.o)
 
 all: init $(LIB_NAME)
+
+main: all
+	    $(CC) $(MAIN) -I $(INCLUDES_FOLDER) $(INCLUDES_LIBRARIES) $(LIB_NAME) $(SOURCES_DEPENDENCIES)
 
 ifdef DEPENDENCIES
 init: $(SOURCES_DEPENDENCIES)

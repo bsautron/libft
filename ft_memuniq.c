@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strtrim_letter.c                                :+:      :+:    :+:   */
+/*   ft_memuniq.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: bsautron <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -12,31 +12,24 @@
 
 #include "libft.h"
 
-char	*ft_strtrim_letter(char *str)
+void	*ft_memuniq(const void *ptr, size_t len)
 {
-	char	*temp;
-	int		i;
-	int		j;
-	char	*dest;
+	size_t			i;
+	size_t			cursor;
+	unsigned char	buf[256];
+	void			*ret;
 
 	i = 0;
-	j = 0;
-	if (str)
+	cursor = 0;
+	ft_bzero(buf, 256);
+	while (i < len)
 	{
-		temp = ft_strnew(27);
-		while (str[i])
-		{
-			if (!ft_charcheck_in_str(str[i], temp))
-			{
-				temp[j] = str[i];
-				j++;
-			}
-			i++;
-		}
-		dest = ft_strdup(temp);
-		free(temp);
-		if (dest)
-			return (dest);
+		if (!ft_memchr(buf, ((unsigned char *)(ptr))[i], 256))
+			buf[cursor++] = ((unsigned char *)(ptr))[i];
+		i++;
 	}
-	return (NULL);
+	ret = ft_memalloc(cursor);
+	if (ret)
+		ret = ft_memcpy(ret, buf, cursor);
+	return (ret);
 }
